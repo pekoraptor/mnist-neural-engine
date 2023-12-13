@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import sklearn.datasets
+
 
 def plt_function3D(f, additionalPoints=None, pointsColors=None,
                    pltCmap='PiYG', visibility=0.3):
@@ -31,5 +33,20 @@ def plt_function3D(f, additionalPoints=None, pointsColors=None,
     plt.legend()
     plt.show()
 
-# if __name__ == "__main__":
+def print_mnist():
+    dataset = sklearn.datasets.load_digits()
+    for line in dataset['images'][12]:
+        print([int(x > 0) for x in line])
+
+
+def process_dataset():
+    dataset = sklearn.datasets.load_digits()
+    X = dataset['data']
+    y = dataset['target']
+
+    return X, y
+
+
+if __name__ == "__main__":
+    print_mnist()
 #     plt_function3D(g, sgd(g, gGradient, [1, 1.7], 0.5, 10000, 0.01, 4, 1)[1], ['red', 'blue', 'green'])
