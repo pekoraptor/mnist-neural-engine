@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import sklearn.datasets
-
+import sklearn.model_selection
+from perceptron import Perceptron
 
 def plt_function3D(f, additionalPoints=None, pointsColors=None,
                    pltCmap='PiYG', visibility=0.3):
@@ -42,11 +43,36 @@ def print_mnist():
 def process_dataset():
     dataset = sklearn.datasets.load_digits()
     X = dataset['data']
-    y = dataset['target']
+    Y = dataset['target']
+    Y_formatted = []
 
-    return X, y
+    for y in Y:
+        formatted = [0] * y + [1] + [0] * (9 - y)
+        Y_formatted.append(np.array(formatted).reshape(len(formatted), 1))
 
+    return X, Y_formatted
+
+def softmax(X):
+    s = sum(np.exp(X))
+    return (np.exp(X) / s).reshape(X.shape)
+
+def softmax_prime(X):
+    s = softmax(X)
+    return (s * (1 - s)).reshape(X.shape)
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+def sigmoid_prime(x):
+    return sigmoid(x) * (1 - sigmoid(x))
 
 if __name__ == "__main__":
-    print_mnist()
-#     plt_function3D(g, sgd(g, gGradient, [1, 1.7], 0.5, 10000, 0.01, 4, 1)[1], ['red', 'blue', 'green'])
+    # X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]]).reshape(4, 2)
+    # Y = np.array([0, 1, 1, 0]).reshape(4, 1)
+    # perceptron = Perceptron(2, 3, 1, 2, sigmoid, sigmoid_prime)
+    perceptron = Perceptron(64, 10, 3, 10, sigmoid, sigmoid_prime)
+    X, Y  = process_dataset()
+    perceptron.fit(X, Y, 0.01, 1000)
+    print(perceptron.predict(np.array([X[15]])))
+    print(Y[15])
+    # plt_function3D(g, sgd(g, gGradient, [1, 1.7], 0.5, 10000, 0.01, 4, 1)[1], ['red', 'blue', 'green'])
