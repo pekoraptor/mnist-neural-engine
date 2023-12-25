@@ -2,6 +2,7 @@ import numpy as np
 from layer import Layer
 import sklearn.model_selection
 
+
 class Perceptron:
     def __init__(self, input_size, n_count, layer_count, class_count, activation_function, activation_prime) -> None:
         self.network = []
