@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import sklearn.datasets
 import sklearn.model_selection
+import sklearn.metrics
 from perceptron import Perceptron
 from activations import sigmoid, sigmoid_prime
 from copy import copy
@@ -122,3 +123,13 @@ def XOR_test():
     data["Correct Output"] = list(Y)
 
     return pd.DataFrame(data, index=list(range(len(output))))
+
+def confusion_matrix(p: Perceptron, test_size, X, Y, lr, gen_count, val_ratio, val_freq):
+    X_train, X_test, Y_train, Y_test = sklearn.model_selection.train_test_split(X, Y, test_size=test_size)
+    p.fit(X_train, Y_train, lr, gen_count, val_ratio, val_freq)
+    pred_y = format_perceptron_output(p.predict(X_test))
+    true_y = format_perceptron_output(Y_test)
+    cm = sklearn.metrics.confusion_matrix(true_y, pred_y)
+    display = sklearn.metrics.ConfusionMatrixDisplay(cm, display_labels=list(range(10)))
+    display.plot()
+    plt.show()
