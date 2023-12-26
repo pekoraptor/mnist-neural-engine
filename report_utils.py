@@ -91,24 +91,6 @@ def plt_accuracy(learning_rate_arr, acc_arr):
 
     plt.show()
 
-
-
-if __name__ == "__main__":
-    # X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]]).reshape(4, 2)
-    # Y = np.array([0, 1, 1, 0]).reshape(4, 1)
-    # perceptron = Perceptron(2, 3, 1, 2, sigmoid, sigmoid_prime)
-    perceptron = Perceptron(64, 10, 3, 10, sigmoid, sigmoid_prime)
-    X, Y  = process_dataset()
-    X_train, X_test, Y_train, Y_test = sklearn.model_selection.train_test_split(X, Y, test_size = 0.5, random_state=42)
-    perceptron.fit(X_train, Y_train, 0.09, 500, val_freq=10000)
-    predict_output = format_perceptron_output(perceptron.predict(X_test))
-    Y_test = format_perceptron_output(Y_test)
-    for y_pred, y_real in zip(predict_output, Y_test):
-        print(f'{y_pred}, {y_real}')
-    print(f'Accuracy: {check_accuracy(predict_output, Y_test)}%')
-    # plt_function3D(g, sgd(g, gGradient, [1, 1.7], 0.5, 10000, 0.01, 4, 1)[1], ['red', 'blue', 'green'])
-
-
 def XOR_test():
     X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]]).reshape(4, 2)
     Y = np.array([0, 1, 1, 0]).reshape(4, 1)
