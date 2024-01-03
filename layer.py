@@ -1,7 +1,10 @@
 import numpy as np
 
+
 class Layer:
-    def __init__(self, input_size, output_size, activation_function, activation_prime) -> None:
+    def __init__(
+        self, input_size, output_size, activation_function, activation_prime
+    ) -> None:
         self.input_size = input_size
         self.output_size = output_size
         self.weights = np.random.randn(output_size, input_size)
